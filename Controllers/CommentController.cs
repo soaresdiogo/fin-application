@@ -1,8 +1,10 @@
 using fin_application.Dtos.Comment;
+using fin_application.Extensions;
 using fin_application.Helpers;
 using fin_application.Interfaces;
 using fin_application.Mappers;
 using fin_application.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +16,7 @@ namespace fin_application.Controllers
     {
         private readonly ICommentRepository _commentRepo;
         private readonly IStockRepository _stockRepo;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IFMPService _fmpService;
         public CommentController(ICommentRepository commentRepo,
         IStockRepository stockRepo, UserManager<AppUser> userManager,
@@ -21,10 +24,12 @@ namespace fin_application.Controllers
         {
             _commentRepo = commentRepo;
             _stockRepo = stockRepo;
+            _userManager = userManager;
             _fmpService = fmpService;
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll([FromQuery] CommentQueryObject queryObject)
         {
             if (!ModelState.IsValid)
@@ -75,7 +80,11 @@ namespace fin_application.Controllers
                 }
             }
 
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+
             var commentModel = commentDto.ToCommentFromCreate(stock.Id);
+            commentModel.AppUserId = appUser.Id;
             await _commentRepo.CreateAsync(commentModel);
             return CreatedAtAction(nameof(GetById), new { id = commentModel.Id }, commentModel.ToCommentDto());
         }
