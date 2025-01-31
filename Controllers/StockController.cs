@@ -1,4 +1,5 @@
 using fin_application.Data;
+using fin_application.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace fin_application.Controllers
@@ -16,7 +17,7 @@ namespace fin_application.Controllers
         [HttpGet]
         public IActionResult GetAllStocks()
         {
-            var stocks = _context.Stocks.ToList();
+            var stocks = _context.Stocks.ToList().Select(s => s.ToStockDto());
             return Ok(stocks);
         }
 
@@ -29,7 +30,7 @@ namespace fin_application.Controllers
                 return NotFound();
             }
 
-            return Ok(stock);
+            return Ok(stock.ToStockDto());
         }
     }
 }
