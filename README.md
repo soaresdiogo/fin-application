@@ -1,11 +1,7 @@
 # 🌟 Fin Application
-
 ## 📝 Description
-
 A modern .NET Core 8 application built with clean architecture principles, providing robust financial management capabilities.
-
 ## 🚀 Technologies & Tools
-
 - [.NET Core 8.0](https://dotnet.microsoft.com/download/dotnet/8.0) - Framework
 - [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) - ORM
 - [PostgreSQL](https://www.postgresql.org/) - Database
@@ -15,11 +11,8 @@ A modern .NET Core 8 application built with clean architecture principles, provi
 - [Swagger/OpenAPI](https://swagger.io/) - API Documentation
 - [Docker](https://www.docker.com/) - Containerization
 - [Financial Modeling Prep API](https://financialmodelingprep.com/developer/docs/) - Financial Data Provider
-
 ## 🏗️ Architecture
-
 Project structure:
-
 ```
 src/
 ├── Controllers/           # 🎮 API endpoints
@@ -34,25 +27,18 @@ src/
 ├── Repository/          # 📁 Data access layer
 └── Service/             # 🔧 Business logic layer
 ```
-
 ## 📋 Prerequisites
-
 - 🔧 .NET SDK 8.0
 - 🐋 Docker & Docker Compose
 - 🗄️ PostgreSQL
 - 🔑 Financial Modeling Prep API Key
-
 ## 🚀 Getting Started
-
 ### 📥 Clone the Repository
-
 ```bash
 git clone <repository-url>
 cd fin-application
 ```
-
 ### 🐳 Database Setup with Docker
-
 ```yaml
 version: '3.8'
 services:
@@ -66,21 +52,30 @@ services:
       - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
 volumes:
   postgres_data:
 ```
 
-### 💻 Running the Application
+### 🗄️ Database Migrations
+After setting up your database connection in `appsettings.json`, follow these steps to initialize the database:
 
+```bash
+# Install EF Core tools globally (if not already installed)
+dotnet tool install --global dotnet-ef
+
+# Create initial migration
+dotnet ef migrations add InitialMigration
+
+# Apply migrations to the database
+dotnet ef database update
+```
+
+### 💻 Running the Application
 ```bash
 dotnet run
 ```
-
 ## ⚙️ Configuration
-
 Configure your application in `appsettings.json`:
-
 ```json
 {
   "ConnectionStrings": {
@@ -101,24 +96,18 @@ Configure your application in `appsettings.json`:
   }
 }
 ```
-
 ## 🔒 Security Features
-
 - 🔑 JWT Authentication
 - 🔐 Role-based Authorization
 - 🛡️ HTTPS Enforcement
 - 🔒 Secure Password Hashing
 - 🌐 CORS Policy Configuration
-
 ## 🔧 Development Features
-
 - ⚡ Hot Reload Support
 - 🔍 Comprehensive Logging
 - 📝 API Documentation with Swagger
 - 🔄 Entity Framework Migrations
-
 ## 📦 NuGet Packages
-
 - Microsoft.EntityFrameworkCore
 - Microsoft.EntityFrameworkCore.Design
 - Npgsql.EntityFrameworkCore.PostgreSQL
