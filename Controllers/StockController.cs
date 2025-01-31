@@ -3,6 +3,7 @@ using fin_application.Dtos.Stock;
 using fin_application.Helpers;
 using fin_application.Interfaces;
 using fin_application.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace fin_application.Controllers
@@ -20,6 +21,7 @@ namespace fin_application.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
             if (!ModelState.IsValid)
